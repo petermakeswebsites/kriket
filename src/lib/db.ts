@@ -8,6 +8,8 @@ type Data = {
     bugs: Bug[]
 }
 
+console.log("Environemnt:", process.env)
+
 // Use JSON file for storage
 const file = join(__dirname, 'db.json')
 console.log("JSON storage path: ", file)

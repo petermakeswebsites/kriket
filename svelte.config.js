@@ -9,7 +9,12 @@ const config = {
 	kit: {
 		adapter: adapter({out: "server"}),
 		vite: {
-			ssr: { noExternal: ['@popperjs/core'] }
+			ssr: { noExternal: ['@popperjs/core'] },
+			// define: {
+			// 	...(process.env.NODE_ENV == "development" && {
+			// 		'process.env':  process.env
+			// 	})
+			// }
 		}
 	}
 };
