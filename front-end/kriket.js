@@ -1,4 +1,4 @@
-"use strict";
+// import type {NewBug} from "../src/lib/types/bugs"
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -10,7 +10,6 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-exports.__esModule = true;
 function kriket(_a) {
     var path = _a.path, custom = _a.custom;
     var open = false;
@@ -60,6 +59,7 @@ function kriket(_a) {
         });
     }
     window.addEventListener("error", spring);
+    console.log("🐛 Cricket Enabled !");
 }
 // @ts-ignore
 window.kriket = kriket;

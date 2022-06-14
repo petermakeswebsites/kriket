@@ -1,4 +1,11 @@
-import type {NewBug} from "../src/lib/types/bugs"
+// import type {NewBug} from "../src/lib/types/bugs"
+
+type NewBug = {
+    custom?: Record<string, any> | undefined;
+    error: any;
+    message?: string | undefined;
+    domain: string;
+}
 
 type KriketOptions = {
     path: string
