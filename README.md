@@ -10,7 +10,7 @@ Load into your front-end application from `https://cdn.jsdelivr.net/gh/petermake
 <script src="LOCATION_OF_kriket.js" />
 <script>
     kriket({
-        path: "https://pathto.kriket.server/bugs",
+        path: "https://pathto.kriket.server/bug",
         custom: () => { // Optional function that should return an stringifiable object you want to record. 
             return {
                 user: someAuthService.username
