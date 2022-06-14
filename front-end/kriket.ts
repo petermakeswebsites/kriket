@@ -62,6 +62,7 @@ function kriket({path, custom} : KriketOptions) {
         })
     }
     window.addEventListener("error", spring)
+    console.log("🐛 Cricket Enabled !")
 }
 
 // @ts-ignore
