@@ -13,18 +13,23 @@ var __assign = (this && this.__assign) || function () {
 function kriket(_a) {
     var path = _a.path, custom = _a.custom;
     var open = false;
-    function spring(e) {
-        if (open)
+    function spring(message, filename, lineno, colno, err) {
+        // if(e.defaultPrevented) return // Temporary workaround for chrome bug
+        console.log("🐛 Kriket found an error");
+        if (open) {
+            console.log("🐛 Dialogue already open, aborting");
             return;
+        }
         open = true;
         var error = {
-            colno: e.colno,
-            error: e.error,
-            filename: e.filename,
-            lineno: e.lineno,
-            message: e.message
+            colno: colno,
+            error: err,
+            filename: filename,
+            lineno: lineno,
+            message: message
         };
-        var template = "<div style=\"position:absolute;background-color:#0005;left:0px;top:0px;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;\">\n            <div style=\"background-color:white\">\n                <h2>Uh oh!</h2>\n                <p>Looks like we've encountered an error. It would be really helpful to write down some steps you took before this happened.</p>\n                <form id=\"kriketForm\">\n                    <textarea id=\"kriketMessage\" style=\"min-height: 200px\"></textarea>\n                    <button id=\"kriketSubmit\" type=\"submit\">Submit</button>\n                </form>\n            </div>\n        </div>        \n        ";
+        console.error(err);
+        var template = "<div style=\"position:absolute;padding: 1rem;z-index:999999;background-color:#0005;left:0px;top:0px;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;\">\n            <div style=\"background-color:white; padding: 1rem;\">\n                <h2>Uh oh!</h2>\n                <p>Looks like we've encountered an error. It would be really helpful to write down some steps you took before this happened.</p>\n                <form id=\"kriketForm\">\n                    <textarea id=\"kriketMessage\" style=\"min-height: 200px; width: 100%\"></textarea><br />\n                    <button id=\"kriketSubmit\" type=\"submit\">Submit</button>\n                </form>\n            </div>\n        </div>        \n        ";
         var d = document.createElement('div');
         d.innerHTML = template;
         var element = d.firstChild;
@@ -44,6 +49,7 @@ function kriket(_a) {
                 newBug = __assign(__assign({}, newBug), { custom: custom() });
             document.getElementById("kriketSubmit").disabled = true;
             fetch(path, {
+                mode: "no-cors",
                 headers: {
                     "content-type": "application/json",
                     "accept": "application/json"
@@ -58,8 +64,17 @@ function kriket(_a) {
             });
         });
     }
-    window.addEventListener("error", spring);
-    console.log("🐛 Cricket Enabled !");
+    var old = window.onerror;
+    window.onerror = function () {
+        var e = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            e[_i] = arguments[_i];
+        }
+        if (old)
+            old.apply(void 0, e);
+        spring.apply(void 0, e);
+    };
+    console.log("🐛 Kriket Enabled !");
 }
 // @ts-ignore
 window.kriket = kriket;

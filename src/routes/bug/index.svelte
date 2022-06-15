@@ -44,7 +44,15 @@ Today's bugs: {bugs.filter(b => isToday(b.time)).length}
     <tbody>
         {#each bugs as bug, i (bug.id)}
             <tr>
-                <td class="bug-list-error"><div class="bug-list-error-tree"><JSONTree value={bug.error}  /></div><a href="#" on:click|preventDefault={() => console.warn(bug.error)}><Icon name="braces" /></a></td>
+                <td class="bug-list-error" id={"bug_" + bug.id}>
+                    <!-- <div class="bug-list-error-tree">
+                        <JSONTree value={bug.error}  />
+                    </div> -->
+                    <div>{bug.error?.message}</div>
+                    <a href="#" on:click|preventDefault={() => console.warn(bug.error)}>
+                        <Icon name="braces" />
+                    </a>
+                </td>
                 <td>{bug.custom?.version}</td>
                 <td>{format(bug.time, "MMM do yyyy h:mm bbb")}</td>
                 <td>{bug.domain}</td>
